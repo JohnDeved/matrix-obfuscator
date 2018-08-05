@@ -28,29 +28,32 @@ class MatrixLogic {
       }
     }
     let char = String.fromCharCode(d)
-    console.log(i)
+    // console.log(i)
 
     if (!decode) {
-      if (++i % 35 === 0) {
-        char += '\n'
+      i++
+      if (i % 10 === 0) {
+        if (i % 30 === 0) {
+          if (i % (30 * 10) === 0) {
+            char += '\n\n\n\n\n'
+          } else {
+            char += '\n'
+          }
+        } else {
+          char += '          '
+        }
       } else {
         char += ' '
       }
     }
 
-    console.log(x, String.fromCharCode(x), d)
+    // console.log(x, String.fromCharCode(x), d)
     return char
   }
 
   _toUnicodeArray (str) {
     let arr = str.split('')
     return arr.map(x => x.charCodeAt(0))
-  }
-
-  _format (arr) {
-    let str = arr.split('')
-    let match = str.match(/.{1,35}/g)
-    return match.join('\n').split('')
   }
 
   init (input, pass, decode) {
