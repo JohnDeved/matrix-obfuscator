@@ -14,7 +14,7 @@ class MatrixLogic {
     return this._count
   }
 
-  _processor (x, decode) {
+  _processor (x, i, decode) {
     if (this._pass) {
       let key = this._pass[this.count]
       this._key = key.charCodeAt(0)
@@ -27,13 +27,30 @@ class MatrixLogic {
         d -= (this._key + 30000)
       }
     }
+    let char = String.fromCharCode(d)
+    console.log(i)
+
+    if (!decode) {
+      if (++i % 35 === 0) {
+        char += '\n'
+      } else {
+        char += ' '
+      }
+    }
+
     console.log(x, String.fromCharCode(x), d)
-    return String.fromCharCode(d)
+    return char
   }
 
   _toUnicodeArray (str) {
     let arr = str.split('')
     return arr.map(x => x.charCodeAt(0))
+  }
+
+  _format (arr) {
+    let str = arr.split('')
+    let match = str.match(/.{1,35}/g)
+    return match.join('\n').split('')
   }
 
   init (input, pass, decode) {
@@ -44,13 +61,14 @@ class MatrixLogic {
 
     if (typeof input === typeof '') {
       if (decode) {
+        input = input.split('\n').join('')
         input = input.split(' ').join('')
       }
       let array = this._toUnicodeArray(input)
 
       return array
-        .map(x => this._processor(x, decode))
-        .join(decode ? '' : ' ')
+        .map((x, i) => this._processor(x, i, decode))
+        .join('')
     }
   }
 }

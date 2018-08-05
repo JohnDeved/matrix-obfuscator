@@ -16,10 +16,9 @@ class StaticMethodCall{
   }
 }
 `
-test = `Hello`
 
 let encode = matrixObfuscator.encode(test, 'secret password')
-fs.writeFileSync('./test.emoji', encode)
+fs.writeFileSync('./test.matrix', encode)
 
 let decode = matrixObfuscator.decode(encode, 'secret password')
 fs.writeFileSync('./test.text', decode)
